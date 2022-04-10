@@ -4,7 +4,7 @@ import Home from './Home';
 
 function App() {
 
-  // const title = 'Movesense';
+  const title = 'Jobbie';
 
   return (
     <div className="App">
