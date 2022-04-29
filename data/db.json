@@ -1,0 +1,22 @@
+{
+    "posts": [
+        {
+            "title": "My first post",
+            "body": "lorem ipsum...",
+            "author": "Mario",
+            "id": 1
+        },
+        {
+            "title": "My second post",
+            "body": "lorem ipsum...",
+            "author": "Petra",
+            "id": 2
+        },
+        {
+            "title": "My third post",
+            "body": "lorem ipsum...",
+            "author": "Dimitar",
+            "id": 3
+        }
+    ]
+}

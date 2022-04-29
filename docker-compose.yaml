@@ -1,0 +1,10 @@
+version: '3.4'
+
+services:
+  jobbie:
+    build: .
+    container_name: Jobbie_frontend
+    ports:
+      - 3000:3000 
+    stdin_open: true
+    tty: true

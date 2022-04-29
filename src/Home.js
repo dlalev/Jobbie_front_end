@@ -3,18 +3,14 @@ import PostList from "./PostList";
 
 const Home = () => {
 
-    const [posts, setPosts] = useState([
-        { title: 'My new post', body: 'lorem ipsum...', author: 'mario', id: 1},
-        { title: 'My second post', body: 'lorem ipsum...', author: 'Dimitar', id: 2},
-        { title: 'My third post', body: 'lorem ipsum...', author: 'Dimitar', id: 3}
-
-    ])
+    const [posts, setPosts] = useState(null)
 
     // let name = 'dimitar';
 
     const [name, setName] = useState('dimitar');
     const [age, setAge] = useState('21')
     const [isPending, setIsPending] = useState(true);
+    const [error, setError] = useState(null)
 
     const handleClick = (e) => {
         setName('Dimitar');
@@ -30,14 +26,22 @@ const Home = () => {
     //renders just once, because of the [] in the end. if I include name for example its gonna wait for name to change and then render again.
     useEffect(() => {
         console.log('use effect ran');
-        fetch('API')
+        fetch('http://localhost:8000/posts')
             .then(res => {
-                res.json()
-                    return res.json();
+                if(!res.ok){
+                    throw Error('Could not fetch the data')
+                }
+                return res.json();
             })
             .then(data => {
+                console.log(data);
                 setPosts(data);
                 setIsPending(false);
+                setError(null);
+            })
+            .catch((e) => {
+                setIsPending(false);
+                setError(e.message);
             })
     }, []);
 
@@ -48,15 +52,15 @@ const Home = () => {
             <h2>
                 Homepage
             </h2>
-            <p>{ name } is { age } years old</p>
-            <button onClick={handleClick}>Click me</button>
-            {isPending && 
+            {error && <div>{error}</div>}
+            {isPending && <div>Loading...</div>}
+            {!isPending && 
             <PostList posts={posts} title="All posts" handleDelete={handleDelete}/>
             }
             <button onClick={() => setName('dimm')}>Change Name</button>
             <p>{name}</p>
-            <PostList posts={posts.filter((post) => post.author === 'Dimitar')} title="Dimitar's posts" handleDelete={handleDelete}/>
-
+            {/* {isPending && <PostList posts={posts.filter((post) => post.author === 'Dimitar')} title="Dimitar's posts" handleDelete={handleDelete}/>
+            } */}
         </div>
      );
 }
