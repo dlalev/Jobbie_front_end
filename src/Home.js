@@ -1,49 +1,31 @@
 import { useState, useEffect } from "react";
 import PostList from "./PostList";
+import useFetch from "./useFetch";
 
 const Home = () => {
 
-    const [posts, setPosts] = useState(null)
 
     // let name = 'dimitar';
 
+    const { data, isPending, error } =  useFetch('http://localhost:8000/posts');
+
     const [name, setName] = useState('dimitar');
     const [age, setAge] = useState('21')
-    const [isPending, setIsPending] = useState(true);
-    const [error, setError] = useState(null)
+   
 
     const handleClick = (e) => {
         setName('Dimitar');
         setAge('22')
     }
 
-    const handleDelete = (id) => {
-        const newPosts = posts.filter(post => post.id !== id); 
-        setPosts(newPosts);
-    }
+    // const handleDelete = (id) => {
+    //     const newPosts = posts.filter(post => post.id !== id); 
+    //     setData(newPosts);
+    // }
 
     
-    //renders just once, because of the [] in the end. if I include name for example its gonna wait for name to change and then render again.
-    useEffect(() => {
-        console.log('use effect ran');
-        fetch('http://localhost:8000/posts')
-            .then(res => {
-                if(!res.ok){
-                    throw Error('Could not fetch the data')
-                }
-                return res.json();
-            })
-            .then(data => {
-                console.log(data);
-                setPosts(data);
-                setIsPending(false);
-                setError(null);
-            })
-            .catch((e) => {
-                setIsPending(false);
-                setError(e.message);
-            })
-    }, []);
+    
+    
 
 
 
@@ -55,7 +37,7 @@ const Home = () => {
             {error && <div>{error}</div>}
             {isPending && <div>Loading...</div>}
             {!isPending && 
-            <PostList posts={posts} title="All posts" handleDelete={handleDelete}/>
+            <PostList posts={data} title="All posts"/>
             }
             <button onClick={() => setName('dimm')}>Change Name</button>
             <p>{name}</p>

@@ -53,6 +53,7 @@ code {
   padding: 10px 16px;
   margin: 20px 0;
   border-bottom: 1px solid #fafafa;
+  text-decoration: none;
 }
 .post-preview:hover {
   box-shadow: 1px 3px 5px rgba(0,0,0,0.1);
@@ -61,4 +62,7 @@ code {
   font-size: 20px;
   color: #f1356d;
   margin-bottom: 8px;
+}
+.post-preview {
+  text-decoration: none;
 }

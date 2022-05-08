@@ -1,27 +1,48 @@
 import { useState, useEffect } from "react";
 
-const useFetch = () => {
 
-    const [posts, setPosts] = useState(null)
+const useFetch = (url) => {
+
+    const [data, setData] = useState(null)
     const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null)
 
     console.log('use effect ran');
-        fetch('http://localhost:8000/posts')
-            .then(res => {
-                if(!res.ok){
-                    throw Error('Could not fetch the data')
-                }
-                return res.json();
-            })
-            .then(data => {
-                console.log(data);
-                setPosts(data);
-                setIsPending(false);
-                setError(null);
-            })
-            .catch((e) => {
-                setIsPending(false);
-                setError(e.message);
-            })
+    useEffect(() => {
+
+        const abortCont = new AbortController();
+
+
+        setTimeout(() => {
+            fetch(url, { signal: abortCont.signal})
+                .then(res => {
+                    if(!res.ok){
+                        throw Error('Could not fetch the data')
+                    }
+                    return res.json();
+                })
+                .then(data => {
+                    console.log(data);
+                    setData(data);
+                    setIsPending(false);
+                    setError(null);
+                })
+                .catch((e) => {
+                    if(e.name === 'AbortError'){
+                        console.log('fetch aborted')
+                    }
+                    else{
+                        console.log(e.message);
+                        setIsPending(false);
+                        setError(e.message);
+                    }
+                   
+                })
+        }, [0]);
+            return() => abortCont.abort();
+           
+        }, [url]);
+        return{ data, isPending, error }
 }
+
+export default useFetch;
