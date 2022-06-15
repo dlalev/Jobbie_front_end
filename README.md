@@ -2,7 +2,7 @@
 
 Jobbie is a social platform for students. I will upload my progress here.
 
-## Getting started
+## Getting starteds
 
 To make it easy for you to get started with GitLab, here's a list of recommended next steps.
 
