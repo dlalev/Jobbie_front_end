@@ -10,12 +10,12 @@ const Navbar = () => {
     );
   }
 
-
     return (
+
       <nav className="navbar">
         <h1>Jobbie</h1>
         <div className="links">
-          <Link to="/"> Home </Link>
+          <Link to="/">Home</Link>
           <Link to="/create" style={{ 
             color: 'white', 
             backgroundColor: '#f1356d',
@@ -24,7 +24,7 @@ const Navbar = () => {
           <button style={{ 
             color: 'white', 
             backgroundColor: '#f1356d',
-            borderRadius: '8px' 
+            borderRadius: '8px'
           }} onClick={handleLogout}>
                 Logout
             </button>
